@@ -92,7 +92,133 @@ the problem number
 2. do i have number_of_case capped by user? but when i think say someone using my function but they want 1000 cases if i cap my function is useless to them
 """
  
+"""
+To answer distribution dilemma there is a simple approach
+
+weighted probabilistic distribution
+
+Instead of saying "I need 10 of these," you can let each iteration roll a weighted dice. For every case you generate in your loop, decide its mutation type based on a percentage probability:
+
+    40% chance: Return the normal/base query.
+
+    20% chance: Apply a typo.
+
+    20% chance: Remove spaces.
+
+    20% chance: Swap words.
+
+so i look for random.choices and weighted random selection
+"""
+
+"""
+okay so I learned few things first there are two random.choices one is 
+the standard library random.choices
+it doest not has to add up to 100% 
+and you can use cum_weights if the probability is pre computed it slightly boost the performance and to not use both weights and cum_weights together
+and there is value of k that it apply how many random selection we want i think its like swapping the probability randomly
+second is numpy.random.choices
+the probability has to add up to 1.0
+it is more optimized for large arrays and data science
+and there is replace =false to get sample without replacement idk what that means
+and then one more there is numpy.random.default_rng
+again the probability has to add up to 1.0
+and you provide the size=10 maybe its similar that it will generated 10 random choices swapping the p
+and lastly there is scipy but i heard its kind of slow idk why its slow and but it is more recommended for satisticaly anyalsis
+"""
+"""
+but here k don't swap probabilities, it simply tells the function how many items yu want to pull out in one go
+
+for k = 50 it rolls the weighted dice 50 times and returns a list of 50 choices
+"""
+
+"""
+random.choice is i think a better choice for this wher numpy.random.choices will be overkill
+
+I can make random.choices fast with cum_weights and  passing num_cases directly into the k parameter before loop starts
 
 
+If you pass k=50000, random.choices creates a list of 50,000 small text labels (like ["normal", "typo", "normal", ...]).
+
+While 50,000 items sounds big, a list of strings like that takes up less than 2 megabytes of RAM. However, if you feel uncomfortable pre-allocating a list upfront, you don't actually have to do it that way.
+
+so, by using num_cases you make the decision inside the generator loop on ever step using a function call
+
+"""
+
+"""this solve the variable n input problem"""
+
+"""
+next is how do you decide where will be typo
+
+actually that is you can just shove in a random letter or close proximity according to keyboard layout QWERTY to the word for example 
+"what" in physical keyboard 'q and e' are closes to it so it could be qhat or ehat 
+
+what about swapping words 
+
+we could that randomly as well swap one word and put it randomly between the elements
+
+and no space?
+
+for that we choose two element position and and just perform nospace() to them randomly choose the two pos
+
+"""
+
+
+##observation
+
+"""
+one thing i found out that when using random.choices
+
+say
+
+word = "what are you doing"
+result = random.choices(word)
+
+1. it output single character
+2. if your input contain 'space' it sometimes choose the space as well
+3. the outputs always be a unhashable list so you gotta  ''.join(result) to get something out
+
+so for the space you can pass the stripped input that is stripped of space 
+"""
+
+
+# typo function
+
+"""
+for my typo mistake i went with a manual written layout with 2d grid
+the reason is to mock the human like error in QWERTY layout proximity and is very scallable
+
+the method is simple
+check for the row and column to target char that it
+
+• abs(r1 - r2) <= 1: This means the other key can only be in the same row (difference of 0), the row right above (difference of 1), or the row right below (difference of 1). It cannot be 2 or more rows away.
+• abs(c1 - c2) <= 1: This means the other key can only be in the same column (difference of 0), the column to the left (difference of 1), or the column to the right (difference of 1). It cannot be 2 or more columns away.
+
+here char in normal can be chose random letter in word  in test case
+and then simply replaced by its nearest neighbor
+
+we can implement distance wieghting such as higher probability to horizontal neighbor since
+finger slips sideways more often
+
+and the other errors like "hitting both keys together sometimes 'wehat' or 'whaat' when typing fast
+
+"""
+"""
+made some changes to typo 
+
+to solve the weight problem we added weights.append(3)
+the one that are in similar row will have more weights and rest will have 1
+
+then later we can directly pass this to random.choices 
+
+which is obv choose one from the horizontal key with more weights 
+
+say 
+y 
+[t,u,h,g,j] weights = [3,3,1,1,1]
+
+so the probability of getting t and u being chosen is higher
+
+"""
 
  
