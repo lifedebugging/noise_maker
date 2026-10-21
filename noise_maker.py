@@ -64,7 +64,7 @@ def _typo (text):
     return text[:target_idx] + new_char + text[target_idx + 1:]
 
 
-def get_typo_char(char): 
+def get_typo_char(char: str) -> tuple[str, int]: 
     
     r1, c1 = LAYOUT[char]
     neighbors = []
@@ -91,3 +91,31 @@ result = _typo("what are you doing")
 print(result)
 
 
+def _wordswap(text: str) -> str:
+    
+    words = text.split()
+    
+    print(words)
+    if len(words) < 2:
+        print(len(words))
+        return text
+    
+    i = random.randint(0, len(words)- 1)
+    
+    if i == 0:       #always swap with right at start
+        target = 1
+              
+    elif i == len(words) - 1:  #always swap with left at end
+        target = i-1
+    else:
+        target = random.choice([i-1, i+1])  #random select
+    
+    words[i], words[target] = words[target], words[i]
+    
+    return " ".join(words)
+
+
+result2 = _wordswap("what are you doing")
+print(result2)
+    
+    
