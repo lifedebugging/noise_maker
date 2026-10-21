@@ -222,3 +222,22 @@ so the probability of getting t and u being chosen is higher
 """
 
  
+## word_swap
+
+"""
+_wordswap(text)
+
+.split the word using (" ")
+
+then we loop over with enumerate
+
+take the index with random.choices
+
+since the index contains whole word swap to right or left if index to left is 0 always setup to right if right is empty always swap to left word
+
+we can use maketrans here 
+
+return " ".join(words)
+"""
+
+ 
