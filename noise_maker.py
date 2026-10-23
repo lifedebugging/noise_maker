@@ -1,29 +1,37 @@
 import random
+import time
 
-input = None  
+from matplotlib.patheffects import Normal
+
 def noise_maker (input, k_case : int | None):
-    base_case = str(input)
+    if not isinstance(input, str):
+        base_case = str(input)
+        
+    base_case = input
+    
     if not k_case:
         k_case = 50
         
     
-    list_choices = ["normal", _typo, _wordswap, _nospace]
+    mutation_choices = ["normal", "typo", "wordswap", "nospace"]
     weights = [40,20,20,20]
     
-    for i in range(k_case):
-        random.choices(list_choices,
+    for _ in range(k_case):
+        mutation = random.choices(mutation_choices,
                        weights = weights,
-                    #    k = num_cases
-        )
+                       k = 1
+        )[0]
         
-        if list_choices == "normal":
+        if mutation == "normal":
             yield base_case
-        elif list_choices == _typo:
+        elif mutation == "typo":
             yield _typo(base_case)
-        elif list_choices == _wordswap:
+        elif mutation == "wordswap":
             yield _wordswap(base_case)
-        elif list_choices == _nospace:
+        elif mutation == "nospace":
             yield _nospace(base_case)
+            
+        
 
 
 LAYOUT  = {
@@ -48,7 +56,6 @@ def _typo (text):
     target_idx = random.choices(valid_indices)[0]
     
     original_char = text[target_idx]
-    
     neighbors, weights = get_typo_char(original_char.lower())
     
     if not neighbors:
@@ -89,9 +96,8 @@ def _wordswap(text: str) -> str:
     
     words = text.split()
     
-    print(words)
+   
     if len(words) < 2:
-        print(len(words))
         return text
     
     i = random.randint(0, len(words)- 1)
@@ -101,6 +107,7 @@ def _wordswap(text: str) -> str:
               
     elif i == len(words) - 1:  #always swap with left at end
         target = i-1
+        
     else:
         target = random.choice([i-1, i+1])  #random select
     
@@ -117,13 +124,13 @@ def _nospace(text: str):
     
     i = random.randint(0, len(words)- 1)
         
-    if not i == 0:       #always swap with right at start
+    if i == 0:       #always swap with right at start
         target = 1
                 
-    if not i == len(words) - 1:  #always swap with left at end
+    elif i == len(words) - 1:  #always swap with left at end
         target = i-1
-    
-    target = random.choice([i-1, i+1])
+    else:
+        target = random.choice([i-1, i+1])
     
     first = min(i, target)
     second = max(i,target)
@@ -132,4 +139,10 @@ def _nospace(text: str):
     words.pop(second)
     
     return " ".join(words)
-    
+
+text = "what are you doing"
+k_case = 50
+
+for noise in noise_maker(text, k_case):
+    time.sleep(1)
+    print(noise)
