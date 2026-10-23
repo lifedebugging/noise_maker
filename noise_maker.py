@@ -8,7 +8,7 @@ def noise_maker (input, k_case : int | None):
     
     stripped_input = base_case.strip(" ")
     
-    list_choices = ["normal", _typo, "swap", "nospace"]
+    list_choices = ["normal", _typo, _wordswap, _nospace]
     weights = [40,20,20,20]
     
     for i in range(k_case):
@@ -21,9 +21,9 @@ def noise_maker (input, k_case : int | None):
             yield base_case
         elif list_choices == _typo:
             yield None
-        elif list_choices == "swap":
+        elif list_choices == _wordswap:
             yield None
-        elif list_choices == "nospace":
+        elif list_choices == _nospace:
             yield None
 
 
