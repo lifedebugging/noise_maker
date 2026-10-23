@@ -267,3 +267,8 @@ i get it will generate noise but what if i want the noise in part no all togethe
 for example i want the base query stand alone then maybe pause the yield execution
 somehow store or then like line break to generate the typo so i can yk measure it separately 
 """
+"""
+But before I work on that lets make the noise maker make some noise and make it working 
+and then we will proceed with changes and optimization 
+"""
+
