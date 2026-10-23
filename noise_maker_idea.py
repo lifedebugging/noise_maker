@@ -240,4 +240,20 @@ we can use maketrans here
 return " ".join(words)
 """
 
- 
+## nospace
+
+"""
+the idea of nospace is sometimes we forget to press space when speed typing
+this module will mimic such edge case where input has nospace at some points
+
+to achieve that we simply split the text to where space is now we have a list=
+and then choosing the index random again we can either follow the step of word swap
+
+where if index is 0 it perform strip with right side of index vice versa to the index [-1] and if the index is not at the edge it can  randomly choose left or right
+
+here i thought that somehow we can get away without performing split but we don't do that the len becomes each char instead of each word
+
+we have swap words
+
+"""
+
