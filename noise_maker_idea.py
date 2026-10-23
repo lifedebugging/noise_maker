@@ -257,3 +257,13 @@ we have swap words
 
 """
 
+## connecting dots
+
+"""
+since the no space is working I now have to connect all together so they generate the test cases together
+
+how am i going to handle the check with this queries 
+i get it will generate noise but what if i want the noise in part no all together
+for example i want the base query stand alone then maybe pause the yield execution
+somehow store or then like line break to generate the typo so i can yk measure it separately 
+"""

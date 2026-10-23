@@ -5,8 +5,7 @@ def noise_maker (input, k_case : int | None):
     base_case = str(input)
     if not k_case:
         k_case = 50
-    
-    stripped_input = base_case.strip(" ")
+        
     
     list_choices = ["normal", _typo, _wordswap, _nospace]
     weights = [40,20,20,20]
@@ -54,7 +53,6 @@ def _typo (text):
     
     if not neighbors:
         return text
-    
     
     new_char = random.choices(neighbors, weights = weights, k=1)[0]
     
