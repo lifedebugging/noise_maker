@@ -64,7 +64,7 @@ def _typo (text):
     return text[:target_idx] + new_char + text[target_idx + 1:]
 
 
-def get_typo_char(char: str) -> tuple[str, int]: 
+def get_typo_char(char: str) -> tuple[list[str], list[int]]: 
     
     r1, c1 = LAYOUT[char]
     neighbors = []
@@ -118,4 +118,30 @@ def _wordswap(text: str) -> str:
 result2 = _wordswap("what are you doing")
 print(result2)
     
+def _nospace(text: str):
+    words = text.split()
     
+    if len(words) < 2:
+        return text
+    
+    i = random.randint(0, len(words)- 1)
+        
+    if not i == 0:       #always swap with right at start
+        target = 1
+                
+    if not i == len(words) - 1:  #always swap with left at end
+        target = i-1
+    
+    target = random.choice([i-1, i+1])
+    
+    first = min(i, target)
+    second = max(i,target)
+    
+    words[first] = words[first] + words[second]
+    words.pop(second)
+    
+    return " ".join(words)
+    
+
+result3 = _nospace("what are you doing")
+print(result3)
