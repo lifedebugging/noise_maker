@@ -19,11 +19,11 @@ def noise_maker (input, k_case : int | None):
         if list_choices == "normal":
             yield base_case
         elif list_choices == _typo:
-            yield None
+            yield _typo(base_case)
         elif list_choices == _wordswap:
-            yield None
+            yield _wordswap(base_case)
         elif list_choices == _nospace:
-            yield None
+            yield _nospace(base_case)
 
 
 LAYOUT  = {
@@ -85,10 +85,6 @@ def get_typo_char(char: str) -> tuple[list[str], list[int]]:
     return neighbors, weights
 
 
-result = _typo("what are you doing")
-print(result)
-
-
 def _wordswap(text: str) -> str:
     
     words = text.split()
@@ -113,9 +109,6 @@ def _wordswap(text: str) -> str:
     return " ".join(words)
 
 
-result2 = _wordswap("what are you doing")
-print(result2)
-    
 def _nospace(text: str):
     words = text.split()
     
@@ -140,6 +133,3 @@ def _nospace(text: str):
     
     return " ".join(words)
     
-
-result3 = _nospace("what are you doing")
-print(result3)
