@@ -1,9 +1,7 @@
 import random
 import time
 
-from matplotlib.patheffects import Normal
-
-def noise_maker (input, k_case : int | None):
+def noise_generator(input, k_case : int | None):
     if not isinstance(input, str):
         base_case = str(input)
         
@@ -41,7 +39,7 @@ LAYOUT  = {
     }
     
  
-def _typo (text):
+def _typo (text: str) -> str:
     #manual map 
     
     valid_indices = []
@@ -116,7 +114,7 @@ def _wordswap(text: str) -> str:
     return " ".join(words)
 
 
-def _nospace(text: str):
+def _nospace(text: str) -> str:
     words = text.split()
     
     if len(words) < 2:
@@ -143,6 +141,6 @@ def _nospace(text: str):
 text = "what are you doing"
 k_case = 50
 
-for noise in noise_maker(text, k_case):
+for noise in noise_generator(text, k_case):
     time.sleep(1)
     print(noise)
